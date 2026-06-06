@@ -21,16 +21,21 @@ export function STTTestScreen({ originalVerse, onSuccess, onListeningChange }: S
     onListeningChange?.(isListening);
   }, [isListening, onListeningChange]);
 
-  const handleToggle = () => {
-    if (isListening) {
-      stopListening();
-      // 검증 로직 실행
+  // 자동/수동 듣기 종료 시 검증 로직 실행
+  useEffect(() => {
+    if (!isListening && text && feedback === 'none') {
       if (isPass(originalVerse, text)) {
         setFeedback('success');
         setTimeout(onSuccess, 2000);
       } else {
         setFeedback('fail');
       }
+    }
+  }, [isListening, text, feedback, originalVerse, onSuccess]);
+
+  const handleToggle = () => {
+    if (isListening) {
+      stopListening();
     } else {
       setFeedback('none');
       startListening();
@@ -68,24 +73,27 @@ export function STTTestScreen({ originalVerse, onSuccess, onListeningChange }: S
       // 띄어쓰기 차이로 인한 과도한 오답 처리를 줄이기 위해 공백 정규화
       const diff = diffChars(originalVerse.replace(/\s+/g, ' '), text.replace(/\s+/g, ' '));
       return (
-        <p className={`leading-relaxed font-serif tracking-wide min-h-[3rem] break-keep ${
-          originalVerse.length < 40 ? 'text-2xl' : 
-          originalVerse.length < 70 ? 'text-xl' : 'text-lg'
-        }`}>
-          {diff.map((part, index) => {
-            // 사용자가 말했지만 원문에 없는 내용(오발화)은 제외하고,
-            // 원문 기준으로 누락되거나 틀린 부분만 붉은색으로 렌더링
-            if (part.added) return null;
-            return (
-              <span
-                key={index}
-                className={part.removed && part.value.trim() !== '' ? "text-red-400 font-medium" : "text-neutral-200"}
-              >
-                {part.value}
-              </span>
-            );
-          })}
-        </p>
+        <div className="space-y-2">
+          <p className="text-xs text-neutral-500">인식된 결과 (틀린 부분은 빨갛게 표시됩니다)</p>
+          <p className={`leading-relaxed font-serif tracking-wide min-h-[3rem] break-keep ${
+            originalVerse.length < 40 ? 'text-2xl' : 
+            originalVerse.length < 70 ? 'text-xl' : 'text-lg'
+          }`}>
+            {diff.map((part, index) => {
+              // 사용자가 말했지만 원문에 없는 내용(오발화)은 제외하고,
+              // 원문 기준으로 누락되거나 틀린 부분만 붉은색으로 렌더링
+              if (part.added) return null;
+              return (
+                <span
+                  key={index}
+                  className={part.removed && part.value.trim() !== '' ? "text-red-400 font-bold font-medium" : "text-neutral-200"}
+                >
+                  {part.value}
+                </span>
+              );
+            })}
+          </p>
+        </div>
       );
     }
   };
