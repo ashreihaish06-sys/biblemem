@@ -190,12 +190,12 @@ export default function Home() {
   // === 1~10번 목록 화면 ===
   return (
     <main className="flex min-h-full flex-col items-center justify-start p-6 max-w-md mx-auto relative pt-6 pb-6 bg-black">
-      <div className="w-full flex justify-between items-center mb-4 px-2">
+      <div className="w-full flex justify-center items-center mb-6">
         <button 
           onClick={() => setHasStarted(false)}
-          className="text-neutral-500 hover:text-neutral-300 transition-colors flex items-center text-sm"
+          className="bg-neutral-900 text-neutral-300 hover:text-white hover:bg-neutral-800 transition-all px-8 py-2.5 rounded-lg text-sm font-medium border border-neutral-800 shadow-sm"
         >
-          ← 홈으로
+          암송관리
         </button>
       </div>
 
