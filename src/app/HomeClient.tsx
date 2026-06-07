@@ -15,10 +15,6 @@ export function HomeClient({ verses }: { verses: Verse[] }) {
   // 로컬 스토리지에서 데이터 불러오기
   useEffect(() => {
     setIsMounted(true);
-    const savedHasStarted = localStorage.getItem('bible-memo-hasStarted');
-    if (savedHasStarted === 'true') {
-      setHasStarted(true);
-    }
 
     const savedCompletedDates = localStorage.getItem('bible-memo-completedDates');
     if (savedCompletedDates) {
@@ -31,12 +27,6 @@ export function HomeClient({ verses }: { verses: Verse[] }) {
     }
   }, []);
 
-  // 상태가 변경될 때마다 로컬 스토리지에 저장하기
-  useEffect(() => {
-    if (isMounted) {
-      localStorage.setItem('bible-memo-hasStarted', String(hasStarted));
-    }
-  }, [hasStarted, isMounted]);
 
   // === 진짜 홈 화면 (랜딩 화면) ===
   if (!hasStarted) {
