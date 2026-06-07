@@ -49,14 +49,14 @@ export function StageSection({ stage, verses }: StageSectionProps) {
       animate={{ opacity: 1, y: 0 }}
       className="w-full mb-8 rounded-3xl shadow-xl p-5 border border-white flex flex-col items-center space-y-5 overflow-hidden relative"
       style={{
-        backgroundImage: `linear-gradient(to bottom, rgba(23, 23, 23, 0.6), rgba(0, 0, 0, 0.9)), url('/bg-stage${stage}.jpg')`,
+        backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6)), url('/bg-stage${stage}.jpg')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
     >
       <button
         onClick={handleStart}
-        className="w-full py-2 rounded-xl bg-neutral-100 text-neutral-900 font-semibold text-base hover:bg-neutral-300 transition-colors shadow-md"
+        className="w-full py-2 rounded-xl bg-white/20 text-white font-semibold text-base hover:bg-white/30 transition-colors shadow-md border border-white/30 backdrop-blur-sm"
       >
         {stage}단계 시작
       </button>
@@ -69,8 +69,8 @@ export function StageSection({ stage, verses }: StageSectionProps) {
             return (
               <div 
                 key={verse.id} 
-                className={`flex flex-col justify-center items-center aspect-square border-[2px] rounded-[14px] transition-all duration-300
-                  ${isCompleted ? 'bg-red-500 border-red-500 text-white' : 'bg-white border-black text-black'}
+                className={`flex flex-col justify-center items-center aspect-square border-[1px] rounded-[14px] transition-all duration-300 backdrop-blur-sm
+                  ${isCompleted ? 'bg-red-500/50 border-red-400/50 text-white' : 'bg-white/10 border-white/30 text-white'}
                 `}
               >
                 <span className="text-xl font-sans font-bold">{verse.id}</span>
