@@ -49,7 +49,7 @@ export function StageSection({ stage, verses }: StageSectionProps) {
       animate={{ opacity: 1, y: 0 }}
       className="w-full mb-8 rounded-3xl shadow-xl p-5 border border-white flex flex-col items-center space-y-5 overflow-hidden relative"
       style={{
-        backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6)), url('/bg-stage${stage}.jpg')`,
+        backgroundImage: `url('/bg-stage${stage}.png')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
