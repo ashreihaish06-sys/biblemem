@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SteppingStone } from '@/components/memorize/SteppingStone';
 import { STTTestScreen } from '@/components/memorize/STTTestScreen';
 import { motion } from 'framer-motion';
+import { usePWAInstall } from '@/hooks/usePWAInstall';
 
 const dummyVerses = [
   { reference: "요한복음 3:16", text: "하나님이 세상을 이처럼 사랑하사 독생자를 주셨으니 이는 그를 믿는 자마다 멸망하지 않고 영생을 얻게 하려 하심이라" },
@@ -23,6 +24,39 @@ export default function Home() {
   const [selectedVerseIndex, setSelectedVerseIndex] = useState<number | null>(null);
   const [completedDates, setCompletedDates] = useState<Record<number, string>>({});
   const [isMicActive, setIsMicActive] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const { isInstallable, installPWA } = usePWAInstall();
+
+  // 로컬 스토리지에서 데이터 불러오기
+  useEffect(() => {
+    setIsMounted(true);
+    const savedHasStarted = localStorage.getItem('bible-memo-hasStarted');
+    if (savedHasStarted === 'true') {
+      setHasStarted(true);
+    }
+
+    const savedCompletedDates = localStorage.getItem('bible-memo-completedDates');
+    if (savedCompletedDates) {
+      try {
+        setCompletedDates(JSON.parse(savedCompletedDates));
+      } catch (e) {
+        console.error('기록을 불러오는데 실패했습니다.', e);
+      }
+    }
+  }, []);
+
+  // 상태가 변경될 때마다 로컬 스토리지에 저장하기
+  useEffect(() => {
+    if (isMounted) {
+      localStorage.setItem('bible-memo-hasStarted', String(hasStarted));
+    }
+  }, [hasStarted, isMounted]);
+
+  useEffect(() => {
+    if (isMounted) {
+      localStorage.setItem('bible-memo-completedDates', JSON.stringify(completedDates));
+    }
+  }, [completedDates, isMounted]);
 
   // === 암송 화면 (상세 화면) ===
   if (selectedVerseIndex !== null) {
@@ -140,6 +174,14 @@ export default function Home() {
           >
             시작하겠습니다
           </button>
+          {isInstallable && (
+            <button
+              onClick={installPWA}
+              className="w-full py-3 rounded-full bg-orange-500/10 text-orange-400 font-semibold text-sm hover:bg-orange-500/20 transition-colors border border-orange-500/20 mt-2"
+            >
+              앱서랍에 앱 설치하기
+            </button>
+          )}
         </motion.div>
       </main>
     );
