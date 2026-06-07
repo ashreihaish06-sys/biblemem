@@ -69,7 +69,7 @@ export function StageSection({ stage, verses }: StageSectionProps) {
             return (
               <div 
                 key={verse.id} 
-                className={`flex flex-col justify-center items-center aspect-[3/2] border-[1px] rounded-[14px] transition-all duration-300 backdrop-blur-sm
+                className={`flex flex-col justify-center items-center aspect-[27/10] border-[1px] rounded-[10px] transition-all duration-300 backdrop-blur-sm
                   ${isCompleted ? 'bg-red-500/50 border-red-400/50 text-white' : 'bg-white/10 border-white/30 text-white'}
                 `}
               >
