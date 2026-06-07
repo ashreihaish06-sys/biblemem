@@ -47,7 +47,12 @@ export function StageSection({ stage, verses }: StageSectionProps) {
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="w-full mb-8 bg-neutral-900 rounded-3xl shadow-xl p-5 border border-white flex flex-col items-center space-y-5"
+      className="w-full mb-8 rounded-3xl shadow-xl p-5 border border-white flex flex-col items-center space-y-5 overflow-hidden relative"
+      style={{
+        backgroundImage: `linear-gradient(to bottom, rgba(23, 23, 23, 0.6), rgba(0, 0, 0, 0.9)), url('/bg-stage${stage}.jpg')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
     >
       <button
         onClick={handleStart}
