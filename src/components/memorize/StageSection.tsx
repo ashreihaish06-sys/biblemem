@@ -47,11 +47,11 @@ export function StageSection({ stage, verses }: StageSectionProps) {
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="w-full mb-8 bg-neutral-900 rounded-3xl shadow-xl p-5 border border-neutral-800 flex flex-col items-center space-y-5"
+      className="w-full mb-8 bg-neutral-900 rounded-3xl shadow-xl p-5 border border-white flex flex-col items-center space-y-5"
     >
       <button
         onClick={handleStart}
-        className="w-full py-3 rounded-2xl bg-neutral-100 text-neutral-900 font-semibold text-lg hover:bg-neutral-300 transition-colors shadow-lg"
+        className="w-full py-2 rounded-xl bg-neutral-100 text-neutral-900 font-semibold text-base hover:bg-neutral-300 transition-colors shadow-md"
       >
         {stage}단계 시작
       </button>
