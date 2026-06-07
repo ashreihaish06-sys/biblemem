@@ -67,9 +67,8 @@ export function StageSection({ stage, verses }: StageSectionProps) {
             return (
               <div 
                 key={verse.id} 
-                onClick={() => router.push(`/memo/${verse.id}`)}
-                className={`flex flex-col justify-center items-center aspect-square border-[2px] rounded-[14px] transition-all duration-300 cursor-pointer
-                  ${isCompleted ? 'bg-red-500 border-red-500 text-white' : 'bg-white border-black text-black hover:bg-neutral-200'}
+                className={`flex flex-col justify-center items-center aspect-square border-[2px] rounded-[14px] transition-all duration-300
+                  ${isCompleted ? 'bg-red-500 border-red-500 text-white' : 'bg-white border-black text-black'}
                 `}
               >
                 <span className="text-xl font-sans font-bold">{verse.id}</span>
