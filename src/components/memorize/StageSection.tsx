@@ -47,19 +47,16 @@ export function StageSection({ stage, verses }: StageSectionProps) {
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="w-full flex flex-col items-center space-y-4 mb-12"
+      className="w-full mb-8 bg-neutral-900 rounded-3xl shadow-xl p-5 border border-neutral-800 flex flex-col items-center space-y-5"
     >
-      <div className="flex flex-col items-center space-y-2 w-full">
-        <h2 className="text-xl font-bold text-neutral-100">{stage}단계</h2>
-        <button
-          onClick={handleStart}
-          className="w-full py-3 rounded-2xl bg-neutral-100 text-neutral-900 font-semibold text-lg hover:bg-neutral-300 transition-colors shadow-lg"
-        >
-          {stage}단계 시작
-        </button>
-      </div>
+      <button
+        onClick={handleStart}
+        className="w-full py-3 rounded-2xl bg-neutral-100 text-neutral-900 font-semibold text-lg hover:bg-neutral-300 transition-colors shadow-lg"
+      >
+        {stage}단계 시작
+      </button>
       
-      <div className="bg-neutral-900 rounded-3xl shadow-xl w-full p-4 border border-neutral-800">
+      <div className="w-full">
         <div className="grid grid-cols-[repeat(5,minmax(0,1fr))] gap-2 w-full">
           {verses.map((verse) => {
             const isCompleted = !!completedDates[verse.id - 1];

@@ -87,14 +87,7 @@ export function HomeClient({ verses }: { verses: Verse[] }) {
   // === 암송 단계 선택 화면 ===
   return (
     <main className="flex min-h-[100dvh] flex-col items-center justify-start p-6 max-w-md mx-auto relative pt-6 pb-12 bg-black">
-      <div className="w-full flex justify-center items-center mb-6">
-        <button 
-          onClick={() => setHasStarted(false)}
-          className="bg-neutral-900 text-neutral-300 hover:text-white hover:bg-neutral-800 transition-all px-8 py-2.5 rounded-lg text-sm font-medium border border-neutral-800 shadow-sm"
-        >
-          홈으로 돌아가기
-        </button>
-      </div>
+
 
       <div className="w-full mb-8 text-center">
         <h1 className="text-2xl font-medium tracking-tight text-neutral-100">
