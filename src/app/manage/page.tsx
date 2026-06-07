@@ -5,17 +5,14 @@ export default async function ManagePage() {
   const verses = getVerses();
 
   return (
-    <main className="flex min-h-[100dvh] flex-col items-center justify-start p-6 max-w-md mx-auto relative pt-6 pb-12 bg-black">
-      <div className="w-full mb-8 text-center mt-6">
-        <h1 className="text-2xl font-medium tracking-tight text-neutral-100">
+    <main className="flex h-[100dvh] overflow-hidden flex-col items-center justify-start p-4 max-w-md mx-auto relative pt-4 pb-6 bg-black">
+      <div className="w-full mb-4 text-center mt-2 shrink-0">
+        <h1 className="text-xl font-medium tracking-tight text-neutral-100">
           암송 관리
         </h1>
-        <p className="text-neutral-500 mt-2 text-sm break-keep">
-          각 단계별 시작 버튼을 눌러 암송을 진행해 보세요.
-        </p>
       </div>
       
-      <div className="w-full flex-1 relative flex flex-col items-center">
+      <div className="w-full flex-1 relative flex flex-col items-center justify-evenly gap-2 overflow-hidden">
         {/* 1단계 */}
         {verses.length >= 10 && (
           <StageSection stage={1} verses={verses.slice(0, 10)} />

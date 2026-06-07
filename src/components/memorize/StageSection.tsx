@@ -47,7 +47,7 @@ export function StageSection({ stage, verses }: StageSectionProps) {
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="w-full mb-8 rounded-3xl shadow-xl p-5 border border-white flex flex-col items-center space-y-5 overflow-hidden relative"
+      className="w-full rounded-3xl shadow-xl p-3 sm:p-4 border border-white flex flex-col items-center space-y-3 overflow-hidden relative"
       style={{
         backgroundImage: `url('/bg-stage${stage}.png')`,
         backgroundSize: 'cover',
@@ -62,18 +62,18 @@ export function StageSection({ stage, verses }: StageSectionProps) {
       </button>
       
       <div className="w-full">
-        <div className="grid grid-cols-[repeat(5,minmax(0,1fr))] gap-2 w-full">
+        <div className="grid grid-cols-[repeat(5,minmax(0,1fr))] gap-1.5 w-full">
           {verses.map((verse) => {
             const isCompleted = !!completedDates[verse.id - 1];
             
             return (
               <div 
                 key={verse.id} 
-                className={`flex flex-col justify-center items-center aspect-square border-[1px] rounded-[14px] transition-all duration-300 backdrop-blur-sm
+                className={`flex flex-col justify-center items-center aspect-[5/4] border-[1px] rounded-[12px] transition-all duration-300 backdrop-blur-sm
                   ${isCompleted ? 'bg-red-500/50 border-red-400/50 text-white' : 'bg-white/10 border-white/30 text-white'}
                 `}
               >
-                <span className="text-xl font-sans font-bold">{verse.id}</span>
+                <span className="text-lg font-sans font-bold leading-none">{verse.id}</span>
                 {isCompleted && <span className="text-[8px] mt-1 opacity-80">{completedDates[verse.id - 1]}</span>}
               </div>
             );
