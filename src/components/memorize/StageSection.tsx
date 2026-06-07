@@ -47,7 +47,7 @@ export function StageSection({ stage, verses }: StageSectionProps) {
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="w-full rounded-3xl shadow-xl p-3 sm:p-4 border border-white flex flex-col items-center space-y-3 overflow-hidden relative"
+      className="w-full h-full rounded-3xl shadow-xl p-4 border border-white flex flex-col items-center space-y-4 overflow-hidden relative justify-center"
       style={{
         backgroundImage: `url('/bg-stage${stage}.png')`,
         backgroundSize: 'cover',
@@ -56,24 +56,24 @@ export function StageSection({ stage, verses }: StageSectionProps) {
     >
       <button
         onClick={handleStart}
-        className="w-full py-2 rounded-xl bg-white/20 text-white font-semibold text-base hover:bg-white/30 transition-colors shadow-md border border-white/30 backdrop-blur-sm"
+        className="w-2/3 py-1.5 rounded-lg bg-white/20 text-white font-semibold text-sm hover:bg-white/30 transition-colors shadow-md border border-white/30 backdrop-blur-sm"
       >
         {stage}단계 시작
       </button>
       
-      <div className="w-full">
-        <div className="grid grid-cols-[repeat(5,minmax(0,1fr))] gap-1.5 w-full">
+      <div className="w-full flex-1 flex flex-col justify-center">
+        <div className="grid grid-cols-[repeat(5,minmax(0,1fr))] gap-2 w-full">
           {verses.map((verse) => {
             const isCompleted = !!completedDates[verse.id - 1];
             
             return (
               <div 
                 key={verse.id} 
-                className={`flex flex-col justify-center items-center aspect-[5/4] border-[1px] rounded-[12px] transition-all duration-300 backdrop-blur-sm
+                className={`flex flex-col justify-center items-center aspect-square border-[1px] rounded-[14px] transition-all duration-300 backdrop-blur-sm
                   ${isCompleted ? 'bg-red-500/50 border-red-400/50 text-white' : 'bg-white/10 border-white/30 text-white'}
                 `}
               >
-                <span className="text-lg font-sans font-bold leading-none">{verse.id}</span>
+                <span className="text-xl font-sans font-bold leading-none">{verse.id}</span>
                 {isCompleted && <span className="text-[8px] mt-1 opacity-80">{completedDates[verse.id - 1]}</span>}
               </div>
             );
