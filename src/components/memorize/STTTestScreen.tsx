@@ -16,6 +16,7 @@ interface STTTestScreenProps {
 export function STTTestScreen({ originalVerse, onSuccess, onListeningChange }: STTTestScreenProps) {
   const { text, isListening, startListening, stopListening, isSupported } = useSpeechRecognition();
   const [feedback, setFeedback] = useState<'none' | 'success' | 'fail'>('none');
+  const [hasAttempted, setHasAttempted] = useState(false);
 
   useEffect(() => {
     onListeningChange?.(isListening);
@@ -23,7 +24,7 @@ export function STTTestScreen({ originalVerse, onSuccess, onListeningChange }: S
 
   // 자동/수동 듣기 종료 시 검증 로직 실행
   useEffect(() => {
-    if (!isListening && text && feedback === 'none') {
+    if (hasAttempted && !isListening && feedback === 'none') {
       if (isPass(originalVerse, text)) {
         setFeedback('success');
         setTimeout(onSuccess, 2000);
@@ -31,13 +32,14 @@ export function STTTestScreen({ originalVerse, onSuccess, onListeningChange }: S
         setFeedback('fail');
       }
     }
-  }, [isListening, text, feedback, originalVerse, onSuccess]);
+  }, [isListening, text, feedback, originalVerse, onSuccess, hasAttempted]);
 
   const handleToggle = () => {
     if (isListening) {
       stopListening();
     } else {
       setFeedback('none');
+      setHasAttempted(true);
       startListening();
     }
   };
