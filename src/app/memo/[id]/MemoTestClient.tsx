@@ -27,7 +27,7 @@ export function MemoTestClient({ verse, totalCount }: MemoTestClientProps) {
 
     // 라우팅 (다음 구절로 이동. 만약 단계 마지막이면 홈으로)
     if (verse.id % 10 === 0 || verse.id >= totalCount) {
-      router.push('/');
+      router.push('/manage');
     } else {
       router.push(`/memo/${verse.id + 1}`);
     }
@@ -36,7 +36,7 @@ export function MemoTestClient({ verse, totalCount }: MemoTestClientProps) {
   return (
     <div className="flex flex-col h-full max-w-md mx-auto relative p-6 bg-black overflow-hidden min-h-[100dvh]">
       <button 
-        onClick={() => router.push('/')}
+        onClick={() => router.push('/manage')}
         className="absolute top-6 left-6 text-neutral-500 hover:text-neutral-300 transition-colors z-50 flex items-center"
       >
         ← 목록으로
