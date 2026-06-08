@@ -27,7 +27,11 @@ export function StageSection({ stage, verses }: StageSectionProps) {
     }
   }, []);
 
+  const isLocked = stage > 1 && Array.from({ length: (stage - 1) * 10 }).some((_, i) => !completedDates[i]);
+
   const handleStart = () => {
+    if (isLocked) return;
+    
     // Find the first uncompleted verse in this stage
     const uncompletedVerse = verses.find(verse => !completedDates[verse.id - 1]);
     
@@ -47,7 +51,7 @@ export function StageSection({ stage, verses }: StageSectionProps) {
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="w-full h-full rounded-3xl shadow-xl p-4 border border-white flex flex-col items-center space-y-4 overflow-hidden relative justify-center"
+      className={`w-full h-full rounded-3xl shadow-xl p-4 border border-white flex flex-col items-center space-y-4 overflow-hidden relative justify-center ${isLocked ? 'grayscale opacity-70' : ''}`}
       style={{
         backgroundImage: `url('/bg-stage${stage}.png')`,
         backgroundSize: 'cover',
@@ -56,9 +60,14 @@ export function StageSection({ stage, verses }: StageSectionProps) {
     >
       <button
         onClick={handleStart}
-        className="w-2/3 py-1.5 rounded-lg bg-white/20 text-white font-semibold text-sm hover:bg-white/30 transition-colors shadow-md border border-white/30 backdrop-blur-sm"
+        disabled={isLocked}
+        className={`w-2/3 py-1.5 rounded-lg font-semibold text-sm transition-colors shadow-md border backdrop-blur-sm ${
+          isLocked 
+            ? 'bg-neutral-800/50 text-neutral-400 border-neutral-600/30 cursor-not-allowed' 
+            : 'bg-white/20 text-white hover:bg-white/30 border-white/30'
+        }`}
       >
-        {stage}단계 시작
+        {isLocked ? '잠김' : `${stage}단계 시작`}
       </button>
       
       <div className="w-full flex-1 flex flex-col justify-center">
