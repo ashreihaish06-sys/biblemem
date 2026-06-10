@@ -22,8 +22,20 @@ export function STTTestScreen({ originalVerse, onSuccess, onListeningChange }: S
     onListeningChange?.(isListening);
   }, [isListening, onListeningChange]);
 
-  // 자동/수동 듣기 종료 시 검증 로직 실행
+  // 1. 실시간 성공 확인 (말하는 도중에도 일치하면 성공 처리)
   useEffect(() => {
+    if (isListening && feedback === 'none') {
+      if (isPass(originalVerse, text)) {
+        stopListening(); // 성공하면 자동으로 듣기 중지
+        setFeedback('success');
+        setTimeout(onSuccess, 2000);
+      }
+    }
+  }, [text, isListening, feedback, originalVerse, onSuccess, stopListening]);
+
+  // 2. 수동 종료 시 실패 처리
+  useEffect(() => {
+    // !isListening이고 feedback이 none인 경우는 사용자가 수동으로 중지했을 때
     if (hasAttempted && !isListening && feedback === 'none') {
       if (isPass(originalVerse, text)) {
         setFeedback('success');
@@ -102,15 +114,35 @@ export function STTTestScreen({ originalVerse, onSuccess, onListeningChange }: S
 
   return (
     <div className="flex flex-col items-center justify-center w-full flex-1 p-6 space-y-8">
-      {/* 성공 시 빛 번짐 효과 */}
+      {/* 성공 시 빛 번짐 효과 및 정답(O) 마크 */}
       <AnimatePresence>
         {feedback === 'success' && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-orange-500/10 blur-3xl pointer-events-none"
-          />
+            className="absolute inset-0 flex items-center justify-center z-40 pointer-events-none overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-orange-500/10 blur-3xl" />
+            <motion.svg 
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: 'spring', bounce: 0.5 }}
+              className="w-64 h-64 text-orange-500/30 drop-shadow-2xl" 
+              viewBox="0 0 100 100" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="8" 
+              strokeLinecap="round"
+            >
+              <motion.circle
+                cx="50" cy="50" r="40"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              />
+            </motion.svg>
+          </motion.div>
         )}
       </AnimatePresence>
 
@@ -143,17 +175,26 @@ export function STTTestScreen({ originalVerse, onSuccess, onListeningChange }: S
           {isListening ? <MicOff size={32} /> : <Mic size={32} />}
         </button>
       </div>
+      
+      {/* 마이크 사용 안내 문구 */}
+      <div className="text-center">
+        <p className="text-sm text-neutral-400">
+          마이크를 누르면 시작됩니다.
+          <br />
+          다시 누르면 녹음이 종료됩니다.
+        </p>
+      </div>
 
       {/* 피드백 메시지 */}
-      <div className="min-h-[2rem]">
+      <div className="min-h-[2rem] relative z-50">
         <AnimatePresence>
           {feedback === 'success' && (
             <motion.p
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-orange-300 font-medium text-center"
+              className="text-orange-300 font-medium text-center text-lg drop-shadow-md"
             >
-              완벽하게 마음에 새겼어요! ✨
+              정답입니다! 완벽하게 마음에 새겼어요! ✨
             </motion.p>
           )}
           {feedback === 'fail' && (
